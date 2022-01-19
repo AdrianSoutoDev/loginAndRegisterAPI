@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "set NODE_ENV=development&& nodemon index.js",
-    "start": "set NODE_ENV=production&& node index.js"
+    "start": "set NODE_ENV=production&& node index.js",
+    "test": "set NODE_ENV=test&& jest --verbose",
+    "test:watch": "npm run test -- --watch"
   },
   "author": "Adrián Souto",
   "license": "ISC",
@@ -15,15 +17,23 @@
     "dotenv": "10.0.0",
     "express": "4.17.1",
     "jsonwebtoken": "8.5.1",
-    "mongoose": "6.0.12"
+    "mongoose": "6.1.7"
   },
   "devDependencies": {
     "eslint": "8.0.0",
     "eslint-plugin-react": "7.26.1",
+    "jest": "27.4.7",
     "nodemon": "2.0.13",
-    "standart": "6.1.0"
+    "standart": "6.1.0",
+    "supertest": "6.2.2"
   },
   "eslintConfig": {
-    "extends": "./node_modules/stardart/eslintrc.json"
+    "extends": "./node_modules/stardart/eslintrc.json",
+    "env": {
+      "jest": true
+    }
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
