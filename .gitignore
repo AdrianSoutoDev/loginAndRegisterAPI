@@ -1,3 +1,4 @@
 *.env
 request
 node_modules
+coverage
