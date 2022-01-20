@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "set NODE_ENV=development&& nodemon index.js",
     "start": "set NODE_ENV=production&& node index.js",
-    "test": "set NODE_ENV=test&& jest --verbose",
+    "test": "set NODE_ENV=test&& jest --verbose --silent",
     "test:watch": "npm run test -- --watch"
   },
   "author": "Adrián Souto",
@@ -34,6 +34,8 @@
     }
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "resetMocks": true,
+    "restoreMocks": true
   }
 }
