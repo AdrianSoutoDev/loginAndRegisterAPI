@@ -47,6 +47,15 @@ jobs:
       - name: Test
         run: npm run test
 
+
+  deploy:
+    needs: [lint, test]
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
       - name: "Deploy to Vercel"
         run: |
           prodRun=""
