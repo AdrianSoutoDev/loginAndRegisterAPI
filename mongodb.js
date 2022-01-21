@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
-const config = require('./config.js');
+const config = require('./config.js')
 
-//añadir +srv para auenticacion con user y pasword
-const connectionString = config.MONGO_DB_URI;
+// añadir +srv para auenticacion con user y pasword
+const connectionString = config.MONGO_DB_URI
 
-//añadir opciones 
+// añadir opciones
 // conexión a mongodb
 mongoose.connect(connectionString, {
   useNewUrlParser: true,

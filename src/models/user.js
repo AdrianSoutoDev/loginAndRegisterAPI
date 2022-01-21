@@ -1,19 +1,19 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require('mongoose')
 
 const userSchema = new Schema({
-    username: String,
-    password: String,
-    email: String,
-    roles: [String]
+  username: String,
+  password: String,
+  email: String,
+  roles: [String]
 })
 
 userSchema.set('toJSON', {
-    transform: (document, returnedObject) => {
-        returnedObject.id = returnedObject._id
-        delete returnedObject._id
-        delete returnedObject.__v
-        delete returnedObject.password
-    }
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id
+    delete returnedObject._id
+    delete returnedObject.__v
+    delete returnedObject.password
+  }
 })
 
 const User = model('User', userSchema)
