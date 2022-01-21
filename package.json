@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "set NODE_ENV=development&& nodemon index.js",
-    "lint": "eslint . --fix",
+    "lint": "eslint .",
     "start": "set NODE_ENV=production&& node index.js",
-    "test": "set NODE_ENV=test&& jest --verbose --silent",
+    "test": "set NODE_ENV=test&& jest --verbose --silent --maxWorkers=1",
     "test:watch": "npm run test -- --watch"
   },
   "author": "Adrián Souto",

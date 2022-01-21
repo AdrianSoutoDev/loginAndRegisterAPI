@@ -38,7 +38,8 @@ app.use(notFound)
 app.use(handleErrors)
 
 const PORT = config.PORT
-const server = app.listen(PORT)
-console.log(`server running at port ${PORT}`)
+const server = app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
+})
 
 module.exports = { app, server }

@@ -2,55 +2,59 @@ const { afterAll, beforeEach } = require('@jest/globals')
 const { server } = require('../../index')
 const mongoose = require('mongoose')
 const User = require('../models/user')
-const userRepository = require('../repositories/user_repository')
+const userRepositoryMock = require('../repositories/user_repository')
 
 const { usernameExists, emailExists, findUserById } = require('../services/user_service')
 const notExistingID = () => '000000000000000000000000'
 const existingID = () => '111111111111111111111111'
 
-userRepository.findUserByUsername = jest.fn()
-userRepository.findUserByEmail = jest.fn()
-userRepository.findUserById = jest.fn()
+jest.mock('../repositories/user_repository')
 
 beforeEach(() => {
-  User.deleteMany({})
   jest.resetAllMocks()
 })
 
 test('username not exist', async () => {
-  userRepository.findUserByUsername.mockReturnValueOnce(null)
+  userRepositoryMock.findUserByUsername.mockReturnValueOnce(null)
   expect(await usernameExists('notUsername')).toBe(false)
 })
 
 test('username exist', async () => {
-  userRepository.findUserByUsername.mockReturnValueOnce({ id: existingID(), username: 'adrian.souto', password: 'somePassword', email: 'adrian.souto@email.com', roles: [] })
+  userRepositoryMock.findUserByUsername.mockReturnValueOnce({ id: existingID(), username: 'adrian.souto', password: 'somePassword', email: 'adrian.souto@email.com', roles: [] })
   expect(await usernameExists('adrian.souto')).toBe(true)
 })
 
 test('email not exist', async () => {
-  userRepository.findUserByEmail.mockReturnValueOnce(null)
+  userRepositoryMock.findUserByEmail.mockReturnValueOnce(null)
   expect(await emailExists('notEmail')).toBe(false)
 })
 
 test('email exist', async () => {
-  userRepository.findUserByEmail.mockReturnValueOnce({ id: existingID(), username: 'adrian.souto', password: 'somePassword', email: 'adrian.souto@email.com', roles: [] })
+  userRepositoryMock.findUserByEmail.mockReturnValueOnce({ id: existingID(), username: 'adrian.souto', password: 'somePassword', email: 'adrian.souto@email.com', roles: [] })
   expect(await emailExists('adrian.souto@email.com')).toBe(true)
 })
 
 test('find user by id not found', async () => {
-  userRepository.findUserById.mockReturnValueOnce(null)
+  userRepositoryMock.findUserById.mockReturnValueOnce(null)
   const id = notExistingID()
   expect(await findUserById(id)).toBe(null)
 })
 
 test('find user by id', async () => {
   const user = new User({ id: existingID(), username: 'adrian.souto', password: 'somePassword', email: 'adrian.souto@email.com', roles: [] })
-  userRepository.findUserById.mockReturnValueOnce(user)
+  userRepositoryMock.findUserById.mockReturnValueOnce(user)
   const expected = (await findUserById(user.id)).toJSON()
   expect(expected).toStrictEqual(user.toJSON())
 })
 
 afterAll(async () => {
   await mongoose.disconnect()
+  await sleep(1000)
   server.close()
 })
+
+function sleep (ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms)
+  })
+}
