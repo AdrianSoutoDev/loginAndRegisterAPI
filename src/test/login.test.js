@@ -94,12 +94,5 @@ test('API fail register, email already exists', async () => {
 
 afterAll(async () => {
   await mongoose.disconnect()
-  await sleep(1000)
   server.close()
 })
-
-function sleep (ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms)
-  })
-}
